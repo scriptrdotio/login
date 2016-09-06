@@ -32,13 +32,15 @@ Note that you must have form that looks like the form in the following example.
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="shortcut icon" type="image/x-icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico">
 		<link rel="shortcut icon" href="https://www.scriptr.io/themes/scriptr/images/favicon.ico" type="image/png" />
-      	<script src="https://code.jquery.com/jquery-1.9.1.js" ></script>
-		<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+      	<script src="https://code.jquery.com/jquery-1.9.1.min.js" ></script>
+		<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
       	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js" ></script>
-                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
       	<script src="../widgets/login.js"> </script>
         <script src="../widgets/authorization.js"> </script>
+
 		<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type ='text/css' />
       	<link href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css' rel='stylesheet' type ='text/css' />
   		<link href='//fonts.googleapis.com/css?family=Raleway:300,800' rel='stylesheet' type='text/css'>
@@ -49,45 +51,46 @@ Note that you must have form that looks like the form in the following example.
 	</head>
 	<body>
       
-      <!-- begin header with company logo -->
-      <header class="text-center">
-      	<img src="https://blog.scriptr.io/wp-content/uploads/2014/11/logo.png" />
-      </header>
-  
-      <!-- begin page title -->    
-      <h2 class="text-center lead-title"><b>Login</b></h2>
-      <div class="header-strips-one"></div>
-          
-      <!-- begin form -->      
-      <div class="col-xs-12 col-sm-6 col-md-4 form-wrap">
-        <form id="loginForm">
-          <h7 id="errorMessage" class="error"> </h7>
-          <div class="form-group">
-            <label for="deviceId"> ID</label>
-            <input class="form-control" id="id" name="id" placeholder="ID">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-          </div>
-          <button  type="button" class="btn btn-default btn-block text-uppercase">Login</button>
-        </form>
-      </div>
-      <!-- end form  -->
-    
-      
-      <script type="text/javascript">
-		//here we set the login form to be the form with id loginForm . Upon login, the user will be redirected to ./home.html
-		// the form must an input with the id id or user/device id, and an input with the id password for the password.
-	
-        $('#loginForm').loginWidget({redirectTarget:"./home.html"});
-      </script>
+	      <!-- begin header with company logo -->
+	      <header class="text-center">
+	      	<img src="https://blog.scriptr.io/wp-content/uploads/2014/11/logo.png" />
+	      </header>
+	  
+	      <!-- begin page title -->    
+	      <h1 class="text-center lead-title"><b>Login</b></h1>
+	      <div class="header-strips-one"></div>
+	          
+	      <!-- begin form -->      
+	      <div class="container">
+	        <div class="col-sm-5 col-md-4 col-xs-9 form-wrap">
+	          <form id="loginForm">
+	              <div id="errorMessage" class="error alert alert-danger hide"></div>
+	              <div class="form-group">
+	                <input class="form-control" id="id" name="id" placeholder="Username">
+	              </div>
+	              <div class="form-group">
+	                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+	              </div>
+	         	   <button id="submitBtn"  class="btn btn-default btn-block text-uppercase" >Login</button>
+				  <div id="loadingDiv" class="text-center" style="display:none"> <i class="fa fa-spinner fa-spin fa-2x fa-fws"></i></div>
+	          </form>
+	        </div>
+	      </div>
+	      <!-- end form  -->
+	    
+	      
+	      <script type="text/javascript">
+	        $('#loginForm').loginWidget({redirectTarget:"./home.html"});
+	      </script>
 	</body>
 </html>
+
 ```
 
 ###Authorization Widget 
 ####Creating the authorization widget 
+
+As soon as the authorization widget is created, it will validate the token then keep validating the token every 10 seconds. The default behavior if the token is valid is being redirected to the loginPage property. But that behavior can be overriden using the onTokenInvalid function.
 
 ```
  var authorization  = $.scriptr.authorization({onTokenValid:function(){
@@ -99,6 +102,17 @@ Note that you must have form that looks like the form in the following example.
 				//override the default behavior if the token is invalid
 			}  });
 ```
+
+#### Log out 
+After having instantiated the widget, calling logout on it will allow you to kill the current session.
+
+```
+
+authorization.logout();
+
+```
+
+#### Example
 
 ```
 <!DOCTYPE html>
