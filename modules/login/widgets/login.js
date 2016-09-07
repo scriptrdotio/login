@@ -102,14 +102,14 @@ $.widget( "scriptr.loginWidget", {
 				data: parameters,
           		dataType: 'json',
 				success: jQuery.proxy(function(data) {
-                    this.hideLoading();
                   	this.element.data('bootstrapValidator').resetForm();
 					var errorMessageDiv = 	this.element.find("#errorMessage");
                   	if(data.response.metadata.status == "success"){ //script could fail for unexpected reasons.
                       if(data.response.result.metadata.status == "success"){
                           location.href= this.redirectTarget;
                       }else{
-                                                    
+                          this.hideLoading();
+                        
 
                           errorMessageDiv.removeClass("hide");
 
