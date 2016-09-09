@@ -1,18 +1,15 @@
-# login 
-(Experimental)
-
-
+# About the login Module
+This is an experimental module that provides out of the box login/logout functionality on the server side as well as the client side. The client side consists of a widget that can be included in any HTML file and easily styled. The server side consists of an authorization component for allowing logging in and out.
 
 ##Components
-- /modules/login/widgets/login.js  widget that is can be place in an HTML file to provide login for devices and users.
-- /modules/login/widgets/authorization.js widget that can authenticate the token within the cookie, and invoke callbacks based on whether or not the token is valid or invalid. it'll validate the token when the widget is created and every 10 seconds.
-- /modules/login/html/login.html  Prexisting template that allows you to have the login form in your project with minimum effort. you can take it as is or modify it.
-- /modules/login/html/home.html A sample home page that demonstrates the use of the authorization.js widget
-- /modules/login/css/style.css  a simple css file that will allow you control the styling of the login form applied on the /modules/login/test/login.html
+- /modules/login/widgets/login.js: a widget that can be placed in an HTML file to provide login for devices and users.
+- /modules/login/widgets/authorization.js: a widget that can authenticate the token within the cookie, and invoke callbacks based on whether or not the token is valid. It will validate the token when the widget is created, then every 10 seconds thereafter.
+- /modules/login/html/login.html: a template that allows you to have the login form in your project with minimum effort. You can use it "as is" or customize it as you see fit.
+- /modules/login/html/home.html: a sample home page that demonstrates the use of the authorization.js widget.
+- /modules/login/css/style.css: a simple CSS file that will allow you to control the styling of the login form. It is applied to the /modules/login/test/login.html file.
+- /modules/login/login: a server side scriptr script that logs the user device in, returns a bearer token, then saves it in a cookie.
 
-- /modules/login/login  server side scriptr script that logins the user device , returns a bearer token and puts it in a cookie.
-
-##Usage 
+##Usage
 ###Login Widget 
 ####Creating the login widget
 
