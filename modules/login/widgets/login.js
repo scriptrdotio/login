@@ -14,9 +14,18 @@
 $.widget( "scriptr.loginWidget", {
   	//relative path to home page
   	redirectTarget :"home.html",
+  	expiry:1,
+  	anonymousToken:null,
    	_create: function() {
      	if(this.options.redirectTarget){
           this.redirectTarget = this.options.redirectTarget;
+        }
+        if(this.options.expiry){
+  			this.expiry = this.options.expiry;
+		}
+      
+      	if(this.options.anonymousToken){
+        	this.anonymousToken = this.options.anonymousToken;  
         }
       	
       	$.scriptr.authorization({
@@ -95,7 +104,7 @@ $.widget( "scriptr.loginWidget", {
       	var login = this.element.find("#id").val();
         var password=  this.element.find("#password").val();
           
-        var parameters = {"id" : login, "password" : password};
+        var parameters = {"id" : login, "password" : password ,"expiry" : "" + this.expiry,"auth_token":this.anonymousToken};
         $.ajax({
 				type: "POST",
 				url: "https://"+ document.location.hostname + "/modules/login/login",
@@ -113,7 +122,7 @@ $.widget( "scriptr.loginWidget", {
 
                           errorMessageDiv.removeClass("hide");
 
-                          if(data.response.result.metadata.errorCode == "INVALID_USER" || data.response.result.metadata.errorCode == "INVALID_SIGNATURE" ){
+                          if(data.response.result.metadata.errorCode == "INVALID_USER" || data.response.result.metadata.errorCode == "INVALID_SIGNATURE" || data.response.result.metadata.errorCode == "USER_SUSPENDED"){
                             	
                              errorMessageDiv.text("Invalid Username or password.");
                            }else{
@@ -130,7 +139,16 @@ $.widget( "scriptr.loginWidget", {
                               errorMessageDiv.addClass("hide");
                            }, 5000);
                     }
-                   },this)
+                   },this), error:jQuery.proxy(function(){
+                            this.hideLoading();
+							var errorMessageDiv = 	this.element.find("#errorMessage");
+			    			errorMessageDiv.removeClass("hide");
+             	            errorMessageDiv.text("An internal error occured.");
+                    		setTimeout(function() {
+                              errorMessageDiv.addClass("hide");
+                           }, 5000);
+                
+                },this)	
 					
 			
 			});
