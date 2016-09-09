@@ -97,7 +97,7 @@ Note that you must have a form that looks like the form in the following example
 ###Authorization Widget 
 ####Creating the authorization widget 
 
-As soon as the authorization widget is created, it will validate the token then keep validating the token every 10 seconds. The default behavior if the token is valid is being redirected to the loginPage property. But that behavior can be overriden by passing the onTokenInvalid function.
+As soon as the authorization widget is created, it will validate the token then keep validating the token every 10 seconds. The default behavior if the token is invalid is being redirected to the loginPage property. But that behavior can be overriden by passing the onTokenInvalid function.
 
 ```
  var authorization  = $.scriptr.authorization({onTokenValid:function(){
