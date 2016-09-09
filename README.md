@@ -2,22 +2,29 @@
 (Experimental)
 
 
+
 ##Components
 - /modules/login/widgets/login.js  widget that is can be place in an HTML file to provide login for devices and users.
 - /modules/login/widgets/authorization.js widget that can authenticate the token within the cookie, and invoke callbacks based on whether or not the token is valid or invalid. it'll validate the token when the widget is created and every 10 seconds.
 - /modules/login/html/login.html  Prexisting template that allows you to have the login form in your project with minimum effort. you can take it as is or modify it.
 - /modules/login/html/home.html A sample home page that demonstrates the use of the authorization.js widget
 - /modules/login/css/style.css  a simple css file that will allow you control the styling of the login form applied on the /modules/login/test/login.html
-- /modules/login/config configuration file for the login server side script.
+
 - /modules/login/login  server side scriptr script that logins the user device , returns a bearer token and puts it in a cookie.
 
 ##Usage 
 ###Login Widget 
 ####Creating the login widget
+
+The login widget should be used with the scriptr.io subdomain configured on your account. ( Go to Account - > SUB-DOMAIN)
+
 ```  
- $('<jQuerySelectorToForm>').loginWidget({redirectTarget:"<relative Path To Home Page>"});
+ $('<jQuerySelectorToForm>').loginWidget({redirectTarget:"<relative Path To Home Page>", anonymousToken:"<Your scriptr.io anonymous token>" ,expiry: <number of hours>});
+ 
+ //expiry is the number of hours before the session is invalidated.
+ 
 ```  
-Note that you must have form that looks like the form in the following example.
+Note that you must have a form that looks like the form in the following example.
 
 #### Example
 
@@ -90,7 +97,7 @@ Note that you must have form that looks like the form in the following example.
 ###Authorization Widget 
 ####Creating the authorization widget 
 
-As soon as the authorization widget is created, it will validate the token then keep validating the token every 10 seconds. The default behavior if the token is valid is being redirected to the loginPage property. But that behavior can be overriden using the onTokenInvalid function.
+As soon as the authorization widget is created, it will validate the token then keep validating the token every 10 seconds. The default behavior if the token is valid is being redirected to the loginPage property. But that behavior can be overriden by passing the onTokenInvalid function.
 
 ```
  var authorization  = $.scriptr.authorization({onTokenValid:function(){
