@@ -17,11 +17,11 @@
 
 $.widget( "scriptr.authorization", {
  	
-  	token:null,
-  	loginPage:"/modules/login/login.html",
-  	user:null,
+   token:null,
+   loginPage:"/modules/login/login.html",
+   user:null,
   	
-   	_create: function() {
+   _create: function() {
       	if(!this.options.onTokenValid){
            this.onTokenValid = function(){
 
@@ -46,15 +46,24 @@ $.widget( "scriptr.authorization", {
     
     **/
   
-  	getAuthorizationHeader:function(){
+    getAuthorizationHeader:function(){
       	return {"authorization":"Bearer " + this.token};
     },
-  	
+  
+   /**
+     Returns the user that is currently authorized.
+    
+    **/
+    
+    getUser:function(){
+      	return this.user;
+    },
+	
   /**
   *	
   *	validates the bearer token at the first load and every 20 seconds the page is open.it calls onTokenValid when the token is detected as   * valid and it calls onTokenInvalid whenever a token is detected to be invalid
   **/
-  	validateToken:function(){
+    validateToken:function(){
       	if($.cookie('token') && $.cookie('token') != ''){
   			this.token = $.cookie('token');
   		}else{
@@ -86,17 +95,17 @@ $.widget( "scriptr.authorization", {
     },
   	
   	/**Event that is fired whenever a token is detected to be invalid **/
-  	onTokenInvalid :function(){
+    onTokenInvalid :function(){
      	location.href= this.loginPage;
     },
   	/**
     	Event that is fired whenever a token is detected to be valid
     **/
-  	onTokenValid:function(){
+    onTokenValid:function(){
       
     },
   	
-  	logout:function(){
+    logout:function(){
     	$.removeCookie('token',{'path':'/'});
       	this.onTokenInvalid();
     }
