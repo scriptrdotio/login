@@ -86,7 +86,7 @@ $.widget( "scriptr.authorization", {
                error:jQuery.proxy(function(data){
                  data = JSON.parse(data.responseText);
                   if(data.response.metadata.status = "failure"){
-                   		if(data.response.metadata.errorCode == "INVALID_TOKEN"){
+                   		if(data.response.metadata.errorCode == "INVALID_TOKEN" || data.response.metadata.errorCode == "INVALID_SIGNATURE" ){
                           	this.onTokenInvalid();
                         } 	
                   }
