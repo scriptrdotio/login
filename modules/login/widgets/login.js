@@ -17,6 +17,11 @@ $.widget( "scriptr.loginWidget", {
   	expiry:1,
   	anonymousToken:null,
    	_create: function() {
+		
+	if(window.location.protocol != "https:") {
+  		window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+	}
+		
      	if(this.options.redirectTarget){
           this.redirectTarget = this.options.redirectTarget;
         }
